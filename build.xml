@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE project [<!ENTITY common SYSTEM "common.xml">]>
+<project name="es_Carousel" default="finished" basedir=".">
+    <property name="ProjectName" value="es_Carousel" />
+
+
+    <!-- 压缩方式设置 -->
+    <!-- 以下两个value均为false时，只是将合并的脚本拷贝到${tar.icard.dir}中 -->
+    <!-- value为true时：压缩合并生成的js文件 -->
+    <property name="IsMinify" value="false"/>
+    <!-- value为true时：压缩合并生成的js文件并混淆变量 -->
+    <property name="IsConfuse" value="true"/>
+    <!-- value为true时：进行GZIP压缩-->
+    <property name="IsGZIP" value="false"/>
+    <!-- value为true时：生成jsdoc-->
+    <property name="IsJsDoc" value="false"/>
+
+
+
+    <!-- 源文件文件路径 -->
+    <property name="src.WebContent.dir" value="."/>
+    <property name="src.source.dir" value="${src.WebContent.dir}/src"/>
+    <property name="src.base.js" value="${src.source.dir}/es.base.js"/>
+    <property name="src.base_patch.js" value="${src.source.dir}/es.base_patch.js"/>
+    <property name="src.result.js" value="${src.source.dir}/es.result.js"/>
+    <property name="src.docs.dir" value="${src.WebContent.dir}/docs"/>
+    <property name="src.htm_API.dir" value="${src.docs.dir}/docs_htm/htm_API"/>
+
+    <!-- 合并js脚本java类路径 -->
+    <property name="rt.lib.dir" value="lib" />
+    <property name="rt.src.dir" value="java" />
+    <property name="rt.temp.dir" value="${tar.deploy.dir}/temp" />
+    <property name="rt.temp.js" value="${rt.temp.dir}/es.result.js"/>
+    <property name="rt.tempConfuseJS.js" value="${rt.temp.dir}/confuse.js"/>
+    <property name="rt.classes.dir" value="${rt.temp.dir}/classes" />
+    <property name="rt.main-class.java" value="com.es.htk.jstools.TextFileMerger" />
+    <property name="rt.JSSourceList.txt" value="JSSourceList.txt"/>
+
+
+    <!-- 发布文件路径 -->
+    <property name="tar.deploy.dir" value="bin"/>
+    <property name="tar.icard.dir" value="${tar.deploy.dir}/wpf"/>
+    <property name="tar.result.js" value="${tar.icard.dir}/src/es.result.js"/
+
+    <!-- 时间戳 -->
+    <tstamp>
+        <format property="currentTime" pattern="yyyy_MM_dd_HH_mm_ss" unit="hour"/>
+    </tstamp>
+    <property name="tar.icard_bin.zip" location="${tar.deploy.dir}/${ProjectName}_bin_${currentTime}.zip"  />
+
+    <!-- 设置gzip压缩标识 -->
+    <condition property="GZIP jsMode">
+        <istrue value="${IsGZIP}"/>
+    </condition>
+
+    <!-- 设置jsdoc标识 -->
+    <condition property="jsdoc mode">
+        <istrue value="${IsJsDoc}"/>
+    </condition>
+
+
+    <!-- 合并文件并打包成zip包 -->
+    <target name="finished">
+        <!-- 重新新建一个${tar.deploy.dir}文件夹 -->
+        <delete dir="${tar.deploy.dir}"/>
+        <mkdir dir="${tar.deploy.dir}"/>
+
+        <!-- 创建${rt.temp.dir}文件夹 -->
+        <mkdir dir="${rt.temp.dir}" />
+
+        <!-- 运行合并、压缩和混淆脚本main函数 -->
+        <antcall target="run"></antcall>
+
+        <!--&lt;!&ndash; 通过JsDoc工具生成HTML的API文档 &ndash;&gt;
+        <antcall target="run_JsDoc"></antcall>
+-->
+
+        <!-- 生成发布的deploy文件夹 -->
+        <antcall target="copy files"></antcall>
+        <echo>合并脚本完成！</echo>
+
+
+
+        <echo>版本号：${ver.version} </echo>
+    </target>
+
+    <!-- 拷贝WebContent中需要的内容到deploy中进行发布 -->
+    <target name="copy files">
+        <copy todir="${tar.icard.dir}">
+            <fileset dir="${src.WebContent.dir}">
+                <exclude name="ant_lib/**"/>
+                <exclude name="bin/**"/>
+                <exclude name="doc/**"/>
+                <exclude name="java/**"/>
+                <exclude name="lib/**"/>
+                <exclude name="deploy.html"/>
+                <exclude name="build.xml"/>
+                <exclude name="test/**"/>
+            </fileset>
+        </copy>
+
+        <!-- 合并、压缩或混淆后的js到${js_tar.dir}中 -->
+        <antcall target="build by appointment jsMode"/>
+
+        <copyfile dest="${src.result.js}" src="${tar.result.js}"/>
+
+        <echo>将发布文件复制到deploy文件夹中完成！</echo>
+
+    </target>
+
+
+    <!-- 运行合成脚本java类 -->
+    <target name="run" depends="compile">
+        <java classname="${rt.main-class.java}" fork="true" failonerror="true">
+            <!-- sysproperty 需要设置，否则会出现编码问题 -->
+            <sysproperty key="file.encoding" value="UTF-8"/>
+            <arg value="${rt.temp.js}"/>
+            <arg value="${rt.JSSourceList.txt}"/>
+            <classpath>
+                <pathelement location="${rt.classes.dir}" />
+            </classpath>
+        </java>
+    </target>
+
+    <!-- 编译合成脚本类 -->
+    <target name="compile">
+        <mkdir dir="${rt.classes.dir}" />
+        <copy todir="${rt.classes.dir}">
+            <fileset dir="${rt.src.dir}">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <javac encoding="UTF-8" srcdir="${rt.src.dir}" destdir="${rt.classes.dir}"  nowarn="yes" classpathref="build.lib.path"/>
+    </target>
+
+
+    <!-- 用JsDoc工具，生成HTML格式的js脚本的API文档 -->
+    <target name="run_JsDoc" if="jsdoc mode">
+        <!-- 通过${src.jsAPI_doc.dir}/*.js}中js生成html说明到${src.htm_API.dir}中去 -->
+        <java classname="JsRun" fork="true">
+            <arg value="${rt.public_run.js}"/>
+            <arg value="-a"/>
+            <arg value="-d=${tar.doc.dir}"/>
+            <arg value="-D=noGlobal:true"/>
+            <arg value="-e=utf-8"/>
+            <arg value="-t=${rt.templates_jsdoc.dir}"/>
+            <arg value="${src.source.dir}/*.js"/>
+            <classpath>
+                <fileset dir="${rt.jsdoc.dir}">
+                    <include name="jsrun.jar"/>
+                </fileset>
+            </classpath>
+        </java>
+
+        <!-- 清除API中的源文件 -->
+        <delete dir="${tar.htm_API.dir}" />
+
+        <echo>HTML版本API文档生成完毕！</echo>
+    </target>
+
+
+    <!--建立需要使用的临时ANT任务-->
+    <target name="AntInit" description="建立需要使用的临时ANT任务">
+
+        <property name="proguard" location="${ant_lib}/proguard" />
+        <taskdef resource="proguard/ant/task.properties" classpath="${proguard}/proguard.jar" />
+
+        <antcallback antfile="${ant_lib}/version_help.ant" target="getVersion" return="ver.version,ver.releaseInfo,ver.releaseInfos">
+            <property name="version_src_dir" location="src" />
+            <property name="version_classname" value="com.es.htk.version.Version" />
+        </antcallback>
+
+        <echo> ANT 初始化任务完成，获得当前发布产品版本信息：${ver.version} </echo>
+    </target>
+</project>

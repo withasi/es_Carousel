@@ -1,5 +1,13 @@
 This file was created by JetBrains WebStorm 5.0.4 for binding GitHub repository
 
+/**
+ * @fileOverview es.Carousel
+ * Copyright (c) 2012, All rights reserved.
+ *
+ * @author	@si(<a href="mailto:withasi@gmail.com">withasi@gmail.com</a>)
+ *
+ */
+
 此类库中部分为平时代码积累、某些开源类库中的部分代码，如jet，hammer.js等。
 /************** define： start  **************/
 /**
