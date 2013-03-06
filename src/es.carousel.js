@@ -18,6 +18,7 @@
 ;(function(e){
     e.Carousel = e.Class({
         initialize:function(overviewEl, contentEl,  options){
+            var peer = this;
             this.overviewEl = typeof overviewEl == "string" ? document.getElementById(overviewEl) : overviewEl;
             this.contentEl = typeof contentEl == "string" ? document.getElementById(contentEl) : contentEl;
             this.pageCount = this.contentEl.children.length;//页面个个数
@@ -57,6 +58,13 @@
             //*******2-4）绑定contentDiv的拖动动作
             this.attachContentDrag(this.contentEl);
 
+
+            //*******2-5）绑定resize事件
+            window.addEventListener("resize",function(){
+                peer.resize();
+                var endPosX =  peer.index * - peer.opts.clientWidth;
+                peer.contentEl.style[e.vendor + 'Transform'] = e.trnOpen + endPosX + 'px,0' + e.trnClose;
+            });
         },
         /**
          * 给el添加拖动事件绑定
@@ -156,6 +164,13 @@
                 }
             }
             this.contentEl.style[e.vendor + 'Transform'] = e.trnOpen + endPosX + 'px,0' + e.trnClose;
+        },
+        /**
+         * resize时，更新相关状态
+         */
+        resize:function(){
+            this.opts.clientWidth =  window.innerWidth; //客户区宽度
+            this.opts.clientHeight =  window.innerHeight; //客户区宽度
         },
         CLASS_NAME:"Carousel"
     });
