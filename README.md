@@ -1,10 +1,10 @@
-This file was created by JetBrains WebStorm 5.0.4 for binding GitHub repository
-
+API introduction
+=====
 /**
  * @fileOverview es.Carousel
  * Copyright (c) 2012, All rights reserved.
  *
- * @author	@si(<a href="mailto:withasi@gmail.com">withasi@gmail.com</a>)
+ * @author    @si(<a href="mailto:withasi@gmail.com">withasi@gmail.com</a>)
  *
  */
 
@@ -64,3 +64,4 @@ This file was created by JetBrains WebStorm 5.0.4 for binding GitHub repository
      }
  </script>
  /************** example： end  **************/
+
