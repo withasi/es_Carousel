@@ -1,5 +1,15 @@
-API introduction
-=====
+Introduction
+===
+一个carousel小组件
+one carousel component for mobile broswers
+
+Index
+===
+[主页](http://w)<br />  
+
+
+API Introduction
+===
 /**
  * @fileOverview es.Carousel
  * Copyright (c) 2012, All rights reserved.
@@ -29,6 +39,8 @@ API introduction
  */
 /************** define： end  **************/
 
+Example
+===
 /************** example： start  **************/
  <div class="view" id="view">
      <div id="content" class="carouselContent">
