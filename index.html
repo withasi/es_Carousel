@@ -31,32 +31,72 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
+        <h1>Introduction</h1>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>一个carousel小组件
+one carousel component for mobile broswers</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<h1>Index</h1>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p><a href="http://w">主页</a><br></p>
 
-<h3>Designer Templates</h3>
+<h1>API Introduction</h1>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>/**</p>
 
-<h3>Rather Drive Stick?</h3>
+<ul>
+<li>@fileOverview es.Carousel</li>
+<li>Copyright (c) 2012, All rights reserved.
+*</li>
+<li>
+<a href="https://github.com/author" class="user-mention">@author</a>    <a href="https://github.com/si" class="user-mention">@si</a>(<a href="mailto:withasi@gmail.com"></a><a href="mailto:withasi@gmail.com">withasi@gmail.com</a>)
+*
+*/</li>
+</ul><p>此类库中部分为平时代码积累、某些开源类库中的部分代码，如jet，hammer.js等。
+/************** define： start  **************/
+/**</p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<ul>
+<li>
+<a href="https://github.com/class" class="user-mention">@class</a>:  Carousel类</li>
+<li>
+<a href="https://github.com/example" class="user-mention">@example</a>  var testCarousel = new es.Carousel("view","content")</li>
+<li>
+<a href="https://github.com/param" class="user-mention">@param</a> overviewEl {HTMLElement|String} 为视角容器，为视角容器，即 Carousel的视角</li>
+<li>
+<a href="https://github.com/param" class="user-mention">@param</a> contentEl {HTMLElement||String} 为上边容器的子容器，内容区的容器，宽度为page之和，为page页面的父容器</li>
+<li>
+<a href="https://github.com/param" class="user-mention">@param</a> options {Object} 构造设置，参数说明：</li>
+<li>          {
+            clientWidth : window.innerWidth, //客户区宽度
+            clientHeight : window.innerHeight, //客户区高度
+            swipeTime:300,//切换时间，单位为ms
+            pageSwitchThred:100,//页面切换阈值，单位为px。表示当左右切换时，当切换的宽度为大于pageSwitchThred时，无论速度，在弹起时均切换
+            isIndicator:true,//是否创建指示器
+            useTransform:true, //如果没有采用transform,则直接通过改变style的top和left属性
+            useTransition:true //如果没有采用Transition,则设定style的top和left作为变换属性，而非指定transform
+        }</li>
+<li>
+<a href="https://github.com/public" class="user-mention">@public</a>
+<em>/
+/</em>************* define： end  **************/</li>
+</ul><h1>Example</h1>
 
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>/************** example： start  **************/
+ </p><div>
+     <div>
+         <div>
+             <p>page 1</p>
+         </div>
+         <div>
+             <p>page 2</p>
+         </div>
+         <div>
+             <p>page 3</p>
+         </div>
+     </div>
+ </div>
+ 
       </section>
     </div>
 
