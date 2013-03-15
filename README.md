@@ -60,7 +60,7 @@ Example
          /**
           * @description:  Carousel类
           * @param overviewEl {HTMLElement||String} 为视角容器，为视角容器，即 Carousel的视角
-          * @param overviewEl {HTMLElement||String} 为上边容器的子容器，内容区的容器，宽度为page之和，为page页面的父容器
+          * @param contentEl {HTMLElement||String} 为上边容器的子容器，内容区的容器，宽度为page之和，为page页面的父容器
           * @param options {Object} 构造设置
           *           {
                  clientWidth : window.innerWidth, //客户区宽度
