@@ -42,7 +42,7 @@ API Introduction
 Example
 ===
 /************** example： start  **************/
- <div class="view" id="view">
+## <div class="view" id="view">
      <div id="content" class="carouselContent">
          <div class="contentpage">
              <p>page 1</p>
@@ -55,8 +55,7 @@ Example
          </div>
      </div>
  </div>
- </body>
- <script type="text/javascript">
+##<script type="text/javascript">
      window.onload = function(){
          /**
           * @description:  Carousel类
