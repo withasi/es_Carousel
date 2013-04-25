@@ -5,7 +5,7 @@ one carousel component for mobile broswers
 
 Index
 ===
-[主页](http://w)<br />  
+[主页](http://61.155.178.185/c/)<br />  
 
 
 API Introduction
